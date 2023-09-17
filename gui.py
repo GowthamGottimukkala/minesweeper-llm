@@ -7,14 +7,14 @@ import time
 
 # Initial matrix data (replace this with your matrix)
 initial_matrix = [
-    ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
-    ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
-    ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
-    ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
-    ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
-    ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
-    ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
-    ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X']
+    ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
+    ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
+    ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
+    ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
+    ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
+    ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
+    ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
+    ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X']
 ]
 
 # Global variables
@@ -40,12 +40,11 @@ def update_matrix_async(validateAns=None):
         new_matrix = '\n'.join([''.join(row) for row in validateAns[1]])
         update_matrix(new_matrix)
         if(validateAns[0]):
-            coordinate_text.config(text="Game Over! You opened a mine.", fg="red")
             loading_label.config(state=tk.DISABLED)
             loading_label.pack_forget()
             update_button.config(state=tk.DISABLED)
             update_button.pack_forget()
-            # update_matrix_highlight(coordinates, new_matrix, True)
+            update_matrix_highlight(coordinates, new_matrix, game_over=True)
         else:
             # Get coordinates asynchronously
             threading.Thread(target=get_coordinates_async, args=(new_matrix,)).start()
@@ -86,15 +85,27 @@ def update_matrix_highlight(coordinates, new_matrix, game_over = False):
                 cell_text = str(cell_data)
 
                 # Determine the background color for the selected cell
-                if game_over and cell_data == 'M':
+                if game_over and cell_text == 'M':
                     background_color = "red"
+                elif cell_text == 'X':
+                    background_color = "lightgray"
+                elif cell_text == '3':
+                    background_color = "orange"
+                elif cell_text == '2':
+                    background_color = "orange"
+                elif cell_text == '1':
+                    background_color = "yellow"
+                elif i == coordinates[0] and j == coordinates[1]:
+                    background_color = "lightblue"
                 else:
-                    background_color = "lightblue" if i == coordinates[0] and j == coordinates[1] else "white"
+                    background_color = "white"
                 matrix_labels[i][j].config(text=cell_text, bg=background_color)
 
-
         # Display the selected coordinate text
-        coordinate_text.config(text=f"LLM suggested to open this: ({coordinates[0]}, {coordinates[1]})")
+        if(game_over):
+            coordinate_text.config(text="Game Over! You opened a mine.", fg="red")
+        else:
+            coordinate_text.config(text=f"LLM suggested to open this: ({coordinates[0]}, {coordinates[1]})")
     except ValueError:
         error_label.config(text="Invalid input. Please enter a valid matrix.")
 
@@ -115,7 +126,22 @@ def update_matrix(new_matrix):
         for i, row_data in enumerate(matrix_data):
             row_labels = []
             for j, cell_data in enumerate(row_data):
-                label = tk.Label(matrix_frame, text=cell_data, width=5, height=2, bg="white")
+                cell_text = str(cell_data)
+                if cell_text == 'M':
+                    background_color = "red"
+                elif cell_text == 'X':
+                    background_color = "lightgray"
+                elif cell_text == '3':
+                    background_color = "orange"
+                elif cell_text == '2':
+                    background_color = "orange"
+                elif cell_text == '1':
+                    background_color = "yellow"
+                elif i == coordinates[0] and j == coordinates[1]:
+                    background_color = "lightblue"
+                else:
+                    background_color = "white"
+                label = tk.Label(matrix_frame, text=cell_data, width=5, height=2, bg=background_color)
                 label.grid(row=i, column=j)
                 row_labels.append(label)
             matrix_labels.append(row_labels)
@@ -131,7 +157,7 @@ def update_matrix(new_matrix):
 initialize()
 # Create the main window
 root = tk.Tk()
-root.title("Matrix GUI")
+root.title("Minesweeper LLM")
 
 # Create a frame to hold the matrix (initializing the global variable)
 matrix_frame = tk.Frame(root)

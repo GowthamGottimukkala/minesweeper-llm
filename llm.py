@@ -17,7 +17,15 @@ def getLLMCoordinates(matrix):
         model="gpt-3.5-turbo",
         messages=messages)
     reply = response["choices"][0]["message"]["content"]
-    return ast.literal_eval(reply)
+    reply = ast.literal_eval(reply)
+    if reply[0]>=8 or reply[1]>=8:
+        message.append({"role":"user", "content":"You provided the wrong output as it is outside the size of the matrix as the given matrix is an 8 * 8 matrix make sure you are giving a different output for the above matrix"})
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=messages)
+        reply = response["choices"][0]["message"]["content"]
+        reply = ast.literal_eval(reply)
+    return reply
 
 def get_new_coordinates(screenshot):
     screenshot.save("matrixss.png")

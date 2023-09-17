@@ -47,9 +47,9 @@ def getText(imagePath):
     myconfig=('-l eng --oem 3 --psm 6')
     # Open the image using PIL (Python Imaging Library)
     image = Image.open(imagePath)
-    image = image.resize((800, 600))
+    image = image.resize((1000, 800))
     text = pytesseract.image_to_string(image, config=myconfig)
-    print("Extracted Numbers:", text)
+    print("Extracted Numbers:\n", text)
     lines = text.split('\n')
     lines_without_spaces = [line.replace(" ", "") for line in lines]
     combined_text = ','.join(lines_without_spaces)[:-1].replace("x", "X")
