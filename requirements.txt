@@ -1,0 +1,4 @@
+# sudo apt install python3-tk
+# pip install Pillow
+# pip install pytesseract
+# sudo apt-get install tesseract-ocr
