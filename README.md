@@ -42,6 +42,8 @@ pip install opencv-python
 pip install python-dotenv
 pip install pytesseract
 pip install Pillow
+
+Add .env with APIKey
 ```
 ## Run
 ```bash
