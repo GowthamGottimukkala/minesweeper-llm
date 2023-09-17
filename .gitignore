@@ -1,3 +1,6 @@
 /__pycache__
 matrixss.png
 .env
+/build
+/dist
+gui.spec
