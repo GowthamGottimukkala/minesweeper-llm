@@ -1,6 +1,9 @@
 # Minesweeper-LLM
 ShellHacks 2023 Hackathon Sponsor Challenge from Toren AI
 
+![minesweeper-llm](https://github.com/GowthamGottimukkala/minesweeper-llm/assets/35572230/9986807e-c690-45ae-8975-5d3ad105d2a2)
+
+
 ## What it does
 Our solution introduces an AI-powered NPC into a 2D game (Minesweeper) that dynamically responds to game events. By utilizing image processing and OCR, we extract grid information from in-game images, enabling the AI model to interpret and interact with the game grid effectively, providing informative and engaging outputs to the player. The outputs are then fed back and played by the NPC in the game.
 
@@ -32,7 +35,8 @@ We built the solution by integrating AI into the Minesweeper game, instructing a
 
 # Usage
 ## Installation
-```sudo apt install python3-tk
+```bash
+sudo apt install python3-tk
 sudo apt-get install tesseract-ocr
 pip install opencv-python
 pip install python-dotenv
@@ -40,6 +44,6 @@ pip install pytesseract
 pip install Pillow
 ```
 ## Run
-```python gui.py
+```bash
+python gui.py
 ```
-
