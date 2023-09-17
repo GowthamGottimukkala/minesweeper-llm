@@ -41,9 +41,11 @@ def update_matrix_async(validateAns=None):
         update_matrix(new_matrix)
         if(validateAns[0]):
             coordinate_text.config(text="Game Over! You opened a mine.", fg="red")
+            loading_label.config(state=tk.DISABLED)
+            loading_label.pack_forget()
             update_button.config(state=tk.DISABLED)
             update_button.pack_forget()
-            update_matrix_highlight(coordinates, new_matrix, True)
+            # update_matrix_highlight(coordinates, new_matrix, True)
         else:
             # Get coordinates asynchronously
             threading.Thread(target=get_coordinates_async, args=(new_matrix,)).start()

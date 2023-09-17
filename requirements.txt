@@ -1,4 +1,7 @@
 # sudo apt install python3-tk
-# pip install Pillow
-# pip install pytesseract
 # sudo apt-get install tesseract-ocr
+# pip install opencv-python
+# pip install python-dotenv
+# pip install pytesseract
+# pip install Pillow
+
