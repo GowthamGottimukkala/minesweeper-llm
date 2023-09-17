@@ -1,7 +1,9 @@
 from ocr import getText
-import openai, ast
+import openai, ast, os
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
 
-openai.api_key = "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"
+openai.api_key = os.getenv('APIKey')
 
 def getLLMCoordinates(matrix):
     messages = []
